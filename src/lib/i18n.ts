@@ -13,12 +13,12 @@ export const copy = {
     alreadyIn: "You're already on the list!",
     genericError: 'Something went wrong. Please try again.',
     invalidEmail: 'Please enter a valid email address.',
-    whyTitle: 'Why RootMate?',
-    whyBody:
-      'Formerly Büro Buddy. Scan a German letter and instantly understand what it means and what to do next. Track registration, bank account, health insurance, tax ID and residence permit in one place — built by and for international students.',
     counterPrefix: 'Join',
     counterSuffix: 'students already on the list',
     footer: 'RootMate — built for international students in Germany.',
+    qrButton: 'QR Code',
+    qrModalHint: 'Scan to join the waitlist',
+    close: 'Close',
   },
   de: {
     badge: 'Bald verfügbar',
@@ -32,12 +32,12 @@ export const copy = {
     alreadyIn: 'Du bist schon auf der Liste!',
     genericError: 'Etwas ist schiefgelaufen. Bitte versuch es erneut.',
     invalidEmail: 'Bitte gib eine gültige E-Mail-Adresse ein.',
-    whyTitle: 'Warum RootMate?',
-    whyBody:
-      'Vormals Büro Buddy. Scanne einen deutschen Behördenbrief und verstehe sofort, was er bedeutet und was zu tun ist. Anmeldung, Bankkonto, Krankenversicherung, Steuer-ID und Aufenthaltstitel an einem Ort — gebaut von und für internationale Studierende.',
     counterPrefix: 'Schon',
     counterSuffix: 'Studierende auf der Liste',
     footer: 'RootMate — gebaut für internationale Studierende in Deutschland.',
+    qrButton: 'QR-Code',
+    qrModalHint: 'Scannen, um der Warteliste beizutreten',
+    close: 'Schließen',
   },
 } as const
 
