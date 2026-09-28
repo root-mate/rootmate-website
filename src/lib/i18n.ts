@@ -2,8 +2,7 @@ export type Language = 'en' | 'de'
 
 export const copy = {
   en: {
-    badge: 'Coming soon',
-    headline: 'Your journey in Germany, sorted.',
+    headline: 'Your companion for starting life in Germany.',
     subheadline:
       'RootMate helps international students navigate German bureaucracy — registration, bank account, health insurance, visa and more. Join the waitlist to get early access and help shape the app.',
     emailPlaceholder: 'you@university.edu',
@@ -13,16 +12,17 @@ export const copy = {
     alreadyIn: "You're already on the list!",
     genericError: 'Something went wrong. Please try again.',
     invalidEmail: 'Please enter a valid email address.',
-    counterPrefix: 'Join',
-    counterSuffix: 'students already on the list',
+    counterText: (count: number) =>
+      count === 1
+        ? '1 student joined the community'
+        : `${count} students joined the community`,
     footer: 'RootMate — built for international students in Germany.',
     qrButton: 'QR Code',
     qrModalHint: 'Scan to join the waitlist',
     close: 'Close',
   },
   de: {
-    badge: 'Bald verfügbar',
-    headline: 'Dein Weg durch die deutsche Bürokratie — sortiert.',
+    headline: 'Dein Begleiter für den Start in Deutschland.',
     subheadline:
       'RootMate hilft internationalen Studierenden bei der deutschen Bürokratie — Anmeldung, Bankkonto, Krankenversicherung, Visum und mehr. Trag dich in die Warteliste ein für frühen Zugang und um die App mitzugestalten.',
     emailPlaceholder: 'du@uni.de',
@@ -32,8 +32,10 @@ export const copy = {
     alreadyIn: 'Du bist schon auf der Liste!',
     genericError: 'Etwas ist schiefgelaufen. Bitte versuch es erneut.',
     invalidEmail: 'Bitte gib eine gültige E-Mail-Adresse ein.',
-    counterPrefix: 'Schon',
-    counterSuffix: 'Studierende auf der Liste',
+    counterText: (count: number) =>
+      count === 1
+        ? '1 Studierende:r ist der Community beigetreten'
+        : `${count} Studierende sind der Community beigetreten`,
     footer: 'RootMate — gebaut für internationale Studierende in Deutschland.',
     qrButton: 'QR-Code',
     qrModalHint: 'Scannen, um der Warteliste beizutreten',

@@ -81,10 +81,6 @@ export default function App() {
 
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         <div className="max-w-xl w-full text-center">
-          <span className="inline-block text-xs font-medium tracking-wide uppercase text-primary-400 bg-primary-100/5 border border-primary-700/40 rounded-full px-3 py-1 mb-6">
-            {t.badge}
-          </span>
-
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
             {t.headline}
           </h1>
@@ -134,9 +130,7 @@ export default function App() {
 
           {count !== null && (
             <p className="text-sm text-[var(--color-text-muted)]">
-              {t.counterPrefix}{' '}
-              <span className="text-primary-400 font-semibold">{count}</span>{' '}
-              {t.counterSuffix}
+              {t.counterText(count)}
             </p>
           )}
         </div>
