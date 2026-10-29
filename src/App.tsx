@@ -1,77 +1,74 @@
-import { useEffect, useState, type FormEvent } from 'react'
-import { copy, type Language } from './lib/i18n'
+import { useEffect, useState } from 'react'
+import { copy, initialLanguage, rememberLanguage, type Language } from './lib/i18n'
+import { pageForPath, routes } from './lib/site'
 import QrModal from './QrModal'
-import { getWaitlistCount, joinWaitlist, UNIQUE_VIOLATION } from './lib/supabase'
+import Home from './pages/Home'
+import Imprint from './pages/Imprint'
+import NotFound from './pages/NotFound'
+import Privacy from './pages/Privacy'
+import Support from './pages/Support'
 
-type Status = 'idle' | 'submitting' | 'success' | 'already' | 'error'
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+const pageTitles = {
+  home: 'Rootmate — German bureaucracy, simplified',
+  privacy: 'Datenschutz · Rootmate',
+  imprint: 'Impressum · Rootmate',
+  support: 'Support · Rootmate',
+  notFound: 'Rootmate',
 }
 
 export default function App() {
-  const [lang, setLang] = useState<Language>('en')
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<Status>('idle')
-  const [count, setCount] = useState<number | null>(null)
+  const [lang, setLang] = useState<Language>(initialLanguage)
   const [showQr, setShowQr] = useState(false)
 
   const t = copy[lang]
+  const page = pageForPath(window.location.pathname)
 
   useEffect(() => {
-    getWaitlistCount().then(setCount)
-  }, [])
+    document.title = pageTitles[page]
+    document.documentElement.lang = lang
+  }, [page, lang])
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    if (!isValidEmail(email)) {
-      setStatus('error')
-      return
-    }
-    setStatus('submitting')
-    const { error } = await joinWaitlist(email.trim().toLowerCase())
-    if (!error) {
-      setStatus('success')
-      setCount((c) => (c === null ? c : c + 1))
-      return
-    }
-    if (error.code === UNIQUE_VIOLATION) {
-      setStatus('already')
-      return
-    }
-    setStatus('error')
+  function toggleLanguage() {
+    const next = lang === 'en' ? 'de' : 'en'
+    setLang(next)
+    rememberLanguage(next)
   }
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)]">
       <header className="flex items-center justify-between px-6 py-5 max-w-3xl w-full mx-auto">
-        <span className="font-semibold tracking-tight text-lg">RootMate</span>
+        <a href={routes.home} className="flex items-center gap-2 font-semibold tracking-tight text-lg">
+          <img src="/logo.svg" alt="" width={28} height={28} />
+          Rootmate
+        </a>
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setShowQr(true)}
-            className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-primary-500 transition-colors"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {page === 'home' && (
+            <button
+              type="button"
+              onClick={() => setShowQr(true)}
+              className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-primary-500 transition-colors"
             >
-              <rect x="3" y="3" width="7" height="7" rx="1" />
-              <rect x="14" y="3" width="7" height="7" rx="1" />
-              <rect x="3" y="14" width="7" height="7" rx="1" />
-              <path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z" />
-            </svg>
-            {t.qrButton}
-          </button>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z" />
+              </svg>
+              {t.qrButton}
+            </button>
+          )}
           <button
             type="button"
-            onClick={() => setLang((l) => (l === 'en' ? 'de' : 'en'))}
+            onClick={toggleLanguage}
             className="text-sm px-3 py-1.5 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-primary-500 transition-colors"
           >
             {lang === 'en' ? 'Deutsch' : 'English'}
@@ -79,65 +76,19 @@ export default function App() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-        <div className="max-w-xl w-full text-center">
-          <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
-            {t.headline}
-          </h1>
+      {page === 'home' && <Home t={t} />}
+      {page === 'privacy' && <Privacy lang={lang} note={t.legalNote} />}
+      {page === 'imprint' && <Imprint lang={lang} note={t.legalNote} />}
+      {page === 'support' && <Support lang={lang} />}
+      {page === 'notFound' && <NotFound t={t} />}
 
-          <p className="text-[var(--color-text-muted)] text-base sm:text-lg leading-relaxed mb-10">
-            {t.subheadline}
-          </p>
-
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-3 justify-center mb-4"
-          >
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value)
-                if (status !== 'idle') setStatus('idle')
-              }}
-              placeholder={t.emailPlaceholder}
-              className="flex-1 sm:flex-initial sm:w-80 rounded-lg bg-[var(--color-bg-elevated)] border border-[var(--color-border)] px-4 py-3 text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
-            />
-            <button
-              type="submit"
-              disabled={status === 'submitting'}
-              className="rounded-lg bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white font-medium px-6 py-3 text-sm transition-colors"
-            >
-              {status === 'submitting' ? t.submitting : t.submit}
-            </button>
-          </form>
-
-          <div className="h-6 text-sm mb-6">
-            {status === 'success' && (
-              <p className="text-primary-400">{t.success}</p>
-            )}
-            {status === 'already' && (
-              <p className="text-secondary-400">{t.alreadyIn}</p>
-            )}
-            {status === 'error' && email && !isValidEmail(email) && (
-              <p className="text-red-400">{t.invalidEmail}</p>
-            )}
-            {status === 'error' && (!email || isValidEmail(email)) && (
-              <p className="text-red-400">{t.genericError}</p>
-            )}
-          </div>
-
-          {count !== null && (
-            <p className="text-sm text-[var(--color-text-muted)]">
-              {t.counterText(count)}
-            </p>
-          )}
-        </div>
-      </main>
-
-      <footer className="text-center text-xs text-[var(--color-text-muted)] py-6">
-        {t.footer}
+      <footer className="text-center text-xs text-[var(--color-text-muted)] py-6 px-6 space-y-2">
+        <nav className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+          <a href={routes.support} className="hover:text-[var(--color-text)]">{t.nav.support}</a>
+          <a href={routes.privacy} className="hover:text-[var(--color-text)]">{t.nav.privacy}</a>
+          <a href={routes.imprint} className="hover:text-[var(--color-text)]">{t.nav.imprint}</a>
+        </nav>
+        <p>{t.footer}</p>
       </footer>
 
       {showQr && (

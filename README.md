@@ -1,7 +1,10 @@
-# RootMate Waitlist
+# Rootmate Website
 
-Landing page + waitlist signup for RootMate (formerly Büro Buddy) — shown via QR code at
-interviews to start building a community of international students in Germany.
+Website for rootmate.de: landing page with waitlist, privacy policy (`/datenschutz`), legal notice
+(`/impressum`) and support (`/support`). The Expo web app is served under `/app` via a rewrite in
+`vercel.json` to the `rootmate` Vercel project (built with `experiments.baseUrl: "/app"`).
+
+Before going live: fill in the operator address in `src/lib/site.ts`.
 
 ## Stack
 
