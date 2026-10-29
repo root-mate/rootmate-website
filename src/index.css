@@ -1,25 +1,39 @@
 @import 'tailwindcss';
 
+/* Same palette as the app (rootmate/src/theme/palette.json + tokens.ts): light by default, dark with the system. */
 @theme {
-  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
-  /* RootMate palette: dark, serious base + green primary + buero-buddy purple as secondary accent */
-  --color-bg: #0b1110;
-  --color-bg-elevated: #121b19;
-  --color-border: #223330;
-  --color-text: #e7ede9;
-  --color-text-muted: #9fb0a8;
+  --color-bg: #f4f4f8;
+  --color-bg-elevated: #ffffff;
+  --color-border: #e5e5ea;
+  --color-text: #1c1c1e;
+  --color-text-muted: #63636a;
+  --color-danger: #dc2626;
 
-  --color-primary-50: #ecfdf3;
-  --color-primary-100: #d1fae0;
-  --color-primary-400: #34d399;
-  --color-primary-500: #10b981;
-  --color-primary-600: #059669;
-  --color-primary-700: #047857;
+  --color-primary-400: #2756c9;
+  --color-primary-500: #3868d6;
+  --color-primary-600: #2756c9;
+  --color-primary-700: #1f48ad;
+}
 
-  --color-secondary-400: #a78bfa;
-  --color-secondary-500: #8b5cf6;
-  --color-secondary-600: #7c3aed;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #111114;
+    --color-bg-elevated: #1c1c20;
+    --color-border: #38383f;
+    --color-text: #f2f2f7;
+    --color-text-muted: #b3b3bb;
+    --color-danger: #ff6961;
+
+    --color-primary-400: #9bbaff;
+    --color-primary-600: #3868d6;
+    --color-primary-700: #2756c9;
+  }
+}
+
+:root {
+  color-scheme: light dark;
 }
 
 body {

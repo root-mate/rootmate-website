@@ -41,7 +41,7 @@ export default function Home({ t }: { t: Copy }) {
   return (
     <main className="flex-1 flex flex-col items-center justify-center px-6 py-12">
       <div className="max-w-xl w-full text-center">
-        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
+        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[var(--color-text)] mb-4">
           {t.headline}
         </h1>
 
@@ -62,12 +62,12 @@ export default function Home({ t }: { t: Copy }) {
               if (status !== 'idle') setStatus('idle')
             }}
             placeholder={t.emailPlaceholder}
-            className="flex-1 sm:flex-initial sm:w-80 rounded-lg bg-[var(--color-bg-elevated)] border border-[var(--color-border)] px-4 py-3 text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
+            className="flex-1 sm:flex-initial sm:w-80 rounded-full bg-[var(--color-bg-elevated)] border border-[var(--color-border)] px-4 py-3 text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
           />
           <button
             type="submit"
             disabled={status === 'submitting'}
-            className="rounded-lg bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white font-medium px-6 py-3 text-sm transition-colors"
+            className="rounded-full bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white font-medium px-6 py-3 text-sm transition-colors"
           >
             {status === 'submitting' ? t.submitting : t.submit}
           </button>
@@ -78,13 +78,13 @@ export default function Home({ t }: { t: Copy }) {
             <p className="text-primary-400">{t.success}</p>
           )}
           {status === 'already' && (
-            <p className="text-secondary-400">{t.alreadyIn}</p>
+            <p className="text-primary-400">{t.alreadyIn}</p>
           )}
           {status === 'error' && email && !isValidEmail(email) && (
-            <p className="text-red-400">{t.invalidEmail}</p>
+            <p className="text-danger">{t.invalidEmail}</p>
           )}
           {status === 'error' && (!email || isValidEmail(email)) && (
-            <p className="text-red-400">{t.genericError}</p>
+            <p className="text-danger">{t.genericError}</p>
           )}
         </div>
 

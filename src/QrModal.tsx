@@ -28,21 +28,19 @@ export default function QrModal({
             size={320}
             level="H"
             bgColor="#ffffff"
-            fgColor="#0b1110"
+            fgColor="#1c1c1e"
           />
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="bg-white rounded-xl px-3 py-2 shadow-md border border-[var(--color-border)]">
-              <span className="font-semibold tracking-tight text-[var(--color-bg)] text-sm">
-                RootMate
-              </span>
+            <div className="bg-white rounded-2xl p-1.5 shadow-md">
+              <img src="/logo.png" alt="Rootmate" width={44} height={44} />
             </div>
           </div>
         </div>
-        <p className="text-[var(--color-text-muted)] text-sm">{hint}</p>
+        <p className="text-white/80 text-sm">{hint}</p>
         <button
           type="button"
           onClick={onClose}
-          className="text-sm px-4 py-2 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-primary-500 transition-colors"
+          className="text-sm px-4 py-2 rounded-full border border-white/30 text-white/80 hover:text-white hover:border-white transition-colors"
         >
           {closeLabel}
         </button>
