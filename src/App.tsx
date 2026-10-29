@@ -38,7 +38,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)]">
       <header className="flex items-center justify-between px-6 py-5 max-w-3xl w-full mx-auto">
         <a href={routes.home} className="flex items-center gap-2 font-semibold tracking-tight text-lg">
-          <img src="/logo.svg" alt="" width={28} height={28} />
+          <img src="/logo.png" alt="" width={32} height={32} />
           Rootmate
         </a>
         <div className="flex items-center gap-2">
